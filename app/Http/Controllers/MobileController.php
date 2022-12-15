@@ -414,7 +414,7 @@ class MobileController extends Controller
             ->join('artists','artists.id','songs.artist_id')
             ->join('genres','genres.id','songs.genre_id')
             ->join('albums','albums.id','songs.album_id')
-            ->where('albums.id',6)
+            ->where('albums.id',4)
             ->limit($limit)
             ->get();
             // $song->plays=$mysong->total;
