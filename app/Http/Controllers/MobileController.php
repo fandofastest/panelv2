@@ -12,6 +12,7 @@ use App\Models\Artist;
 use App\Models\Playlistsong;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
 
 class MobileController extends Controller
 {
@@ -55,6 +56,17 @@ class MobileController extends Controller
                 ->groupBy('plays.songid')
                 ->limit($limit)
                 ->get();
+
+        if ($data.isEmpty()){
+            $data = Plays::select('songid',DB::raw('count(*) as total'))
+            ->join('songs','songs.id','plays.songid')
+            // ->where('plays.created_at','>=',$date)
+            ->groupBy('plays.songid')
+            ->limit($limit)
+            ->get();
+
+        }
+
 
         $new['topweekley']=[];
 
