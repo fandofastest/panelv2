@@ -12,7 +12,6 @@ use App\Models\Artist;
 use App\Models\Playlistsong;
 use Illuminate\Support\Facades\DB;
 
-use function PHPUnit\Framework\isEmpty;
 
 class MobileController extends Controller
 {
@@ -50,17 +49,12 @@ class MobileController extends Controller
         // ->get();
 
         $date = \Carbon\Carbon::today()->subDays(7);
-
-
-        if (empty($date)){
-            $data = Plays::select('songid',DB::raw('count(*) as total'))
-            ->join('songs','songs.id','plays.songid')
-            // ->where('plays.created_at','>=',$date)
-            ->groupBy('plays.songid')
-            ->limit($limit)
-            ->get();
-
-        }
+        $data = Plays::select('songid',DB::raw('count(*) as total'))
+                ->join('songs','songs.id','plays.songid')
+                ->where('plays.created_at','>=',$date)
+                ->groupBy('plays.songid')
+                ->limit($limit)
+                ->get();
 
 
         $new['topweekley']=[];
