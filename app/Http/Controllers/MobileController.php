@@ -62,15 +62,6 @@ class MobileController extends Controller
 
         }
 
-        else {
-            $data = Plays::select('songid',DB::raw('count(*) as total'))
-            ->join('songs','songs.id','plays.songid')
-            ->where('plays.created_at','>=',$date)
-            ->groupBy('plays.songid')
-            ->limit($limit)
-            ->get();
-        }
-
 
         $new['topweekley']=[];
 
@@ -80,7 +71,7 @@ class MobileController extends Controller
             ->join('genres','genres.id','songs.genre_id')
             ->join('albums','albums.id','songs.album_id')
             ->where('songs.id',$mysong->songid)->first();
-            $song->plays=empty($mysong->total)?:0;
+            $song->plays=$mysong->total;
             array_push($new['topweekley'],$song);
 
             # code...
