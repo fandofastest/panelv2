@@ -50,14 +50,9 @@ class MobileController extends Controller
         // ->get();
 
         $date = \Carbon\Carbon::today()->subDays(7);
-        $data = Plays::select('songid',DB::raw('count(*) as total'))
-                ->join('songs','songs.id','plays.songid')
-                ->where('plays.created_at','>=',$date)
-                ->groupBy('plays.songid')
-                ->limit($limit)
-                ->get();
 
-        if ($data.isEmpty()){
+
+        if (empty($date)){
             $data = Plays::select('songid',DB::raw('count(*) as total'))
             ->join('songs','songs.id','plays.songid')
             // ->where('plays.created_at','>=',$date)
@@ -65,6 +60,15 @@ class MobileController extends Controller
             ->limit($limit)
             ->get();
 
+        }
+
+        else {
+            $data = Plays::select('songid',DB::raw('count(*) as total'))
+            ->join('songs','songs.id','plays.songid')
+            ->where('plays.created_at','>=',$date)
+            ->groupBy('plays.songid')
+            ->limit($limit)
+            ->get();
         }
 
 
