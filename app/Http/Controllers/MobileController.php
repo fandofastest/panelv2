@@ -21,7 +21,7 @@ class MobileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($limit=25)
     {
          $baseapiurl=asset('storage/');
 
@@ -30,6 +30,7 @@ class MobileController extends Controller
         ->join('genres','genres.id','songs.genre_id')
         ->join('albums','albums.id','songs.album_id')
         ->orderByDesc('songs.created_at')
+        ->limit($limit)
         ->get();
 
         return response()->json($song);
