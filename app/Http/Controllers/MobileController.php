@@ -31,7 +31,7 @@ class MobileController extends Controller
         ->join('artists','artists.id','songs.artist_id')
         ->join('genres','genres.id','songs.genre_id')
         ->join('albums','albums.id','songs.album_id')
-        ->orderByDesc('songs.id')
+        ->orderByAsc('songs.id')
         ->paginate($paginate);
         }
         else {
@@ -39,7 +39,7 @@ class MobileController extends Controller
             ->join('artists','artists.id','songs.artist_id')
             ->join('genres','genres.id','songs.genre_id')
             ->join('albums','albums.id','songs.album_id')
-            ->orderByDesc('songs.id')
+            ->orderByAsc('songs.id')
             ->get();
         }
 
